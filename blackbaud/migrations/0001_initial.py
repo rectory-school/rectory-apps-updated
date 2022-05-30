@@ -8,44 +8,94 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Student',
+            name="Student",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('student_id', models.CharField(help_text='The SIS Student ID', max_length=256, unique=True)),
-                ('first_name', models.CharField(blank=True, max_length=256)),
-                ('last_name', models.CharField(blank=True, max_length=256)),
-                ('preferred_first_name', models.CharField(blank=True, max_length=256)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "student_id",
+                    models.CharField(
+                        help_text="The SIS Student ID", max_length=256, unique=True
+                    ),
+                ),
+                ("first_name", models.CharField(blank=True, max_length=256)),
+                ("last_name", models.CharField(blank=True, max_length=256)),
+                ("preferred_first_name", models.CharField(blank=True, max_length=256)),
             ],
         ),
         migrations.CreateModel(
-            name='Teacher',
+            name="Teacher",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('teacher_id', models.CharField(max_length=256, unique=True)),
-                ('first_name', models.CharField(blank=True, max_length=256)),
-                ('last_name', models.CharField(blank=True, max_length=256)),
-                ('honorific', models.CharField(blank=True, max_length=256)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("teacher_id", models.CharField(max_length=256, unique=True)),
+                ("first_name", models.CharField(blank=True, max_length=256)),
+                ("last_name", models.CharField(blank=True, max_length=256)),
+                ("honorific", models.CharField(blank=True, max_length=256)),
             ],
         ),
         migrations.CreateModel(
-            name='TeacherEmail',
+            name="TeacherEmail",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.EmailField(max_length=254, unique=True)),
-                ('teacher', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='email', to='blackbaud.teacher')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("email", models.EmailField(max_length=254, unique=True)),
+                (
+                    "teacher",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="email",
+                        to="blackbaud.teacher",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='StudentEmail',
+            name="StudentEmail",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.EmailField(max_length=254, unique=True)),
-                ('student', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='email', to='blackbaud.student')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("email", models.EmailField(max_length=254, unique=True)),
+                (
+                    "student",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="email",
+                        to="blackbaud.student",
+                    ),
+                ),
             ],
         ),
     ]
