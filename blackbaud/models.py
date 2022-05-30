@@ -1,5 +1,13 @@
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 from django.db import models
+from django.db.models import QuerySet
+
+
+class StudentManager(models.Manager):
+    def get_queryset(self) -> QuerySet["Student"]:
+        qs = super().get_queryset()
+        qs = qs.select_related("email")
+        return qs
 
 
 class Student(models.Model):
@@ -12,13 +20,21 @@ class Student(models.Model):
     last_name = models.CharField(max_length=256, blank=True)
     preferred_first_name = models.CharField(max_length=256, blank=True)
 
+    objects = StudentManager()
+
     @property
-    def name(self):
+    def name(self) -> Optional[str]:
         if self.preferred_first_name and self.last_name:
             return f"{self.preferred_first_name} {self.last_name}"
 
         if self.first_name and self.last_name:
             return f"{self.first_name} {self.last_name}"
+
+        return None
+
+    def __str__(self):
+        if name := self.name:
+            return f"Student {self.student_id} {name}"
 
         return f"Student {self.student_id}"
 
@@ -45,21 +61,27 @@ class Teacher(models.Model):
     honorific = models.CharField(max_length=256, blank=True)
 
     @property
-    def formal_name(self) -> str:
+    def formal_name(self) -> Optional[str]:
         if self.honorific and self.last_name:
             return f"{self.honorific} {self.last_name}"
 
         if self.first_name and self.last_name:
             return f"{self.last_name}, {self.first_name}"
 
-        return f"Teacher {self.teacher_id}"
+        return None
 
     @property
-    def informal_name(self) -> str:
+    def informal_name(self) -> Optional[str]:
         if self.first_name and self.last_name:
             return f"{self.first_name} {self.last_name}"
 
         return self.formal_name
+
+    def __str__(self):
+        if name := self.informal_name:
+            return f"Teacher {self.teacher_id}: {name}"
+
+        return f"Teacher {self.teacher_id}"
 
 
 class TeacherEmail(models.Model):
