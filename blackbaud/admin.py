@@ -1,11 +1,6 @@
 from django.contrib import admin
 from django.http import HttpRequest
-from pyparsing import Optional
 from . import models
-
-
-class StudentEmailInline(admin.TabularInline):
-    model = models.StudentEmail
 
 
 @admin.register(models.Student)
@@ -18,13 +13,9 @@ class StudentAdmin(admin.ModelAdmin):
         "first_name",
         "last_name",
         "preferred_first_name",
-        "email__email",
+        "email",
         "teacher_id",
     ]
-
-
-class TeacherEmailInline(admin.TabularInline):
-    model = models.TeacherEmail
 
 
 @admin.register(models.Teacher)
@@ -37,7 +28,7 @@ class TeacherAdmin(admin.ModelAdmin):
         "honorific",
         "first_name",
         "last_name",
-        "email__email",
+        "email",
         "teacher_id",
     ]
 
