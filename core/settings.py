@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     "calendar_generator",
     "job_runner",
     "stored_mail",
+    "blackbaud",
 ]
 
 MIDDLEWARE = [
